@@ -44,7 +44,8 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UserRegDTO userDTOreg) {
         if (this.service.loadUserByUsername(userDTOreg.login()) != null)
-            return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body("Usuário já existe!");
+        //return ResponseEntity.badRequest().build();
 
         String encriptedPassowrd = new BCryptPasswordEncoder().encode(userDTOreg.password());
         UserRegDTO userDto = new UserRegDTO(userDTOreg.name(), userDTOreg.login(), encriptedPassowrd);

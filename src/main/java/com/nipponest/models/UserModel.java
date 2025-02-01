@@ -56,12 +56,12 @@ public class UserModel implements UserDetails {
     @JsonManagedReference
     private List<ProductModel> products = new ArrayList<>();
 
-    public UserModel(String name, String login, String senha, String cep, String telefone) {
+    public UserModel(String name, String login, String password, String cep, String phone) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.cep = cep;
-        this.phone = telefone;
+        this.phone = phone;
     }
 
     @Override
