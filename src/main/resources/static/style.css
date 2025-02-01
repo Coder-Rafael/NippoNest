@@ -122,16 +122,27 @@ body {
 /* Grid de produtos */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+    gap: 1rem; /* Aumentei o gap para dar mais espaçamento entre os itens */
     justify-content: center;
     align-items: center;
 }
 
-/* Ajuste para não esticar um único produto */
+
 .product-card {
-    max-width: 250px;
-    margin: auto; /* Centraliza quando há apenas um item */
+    width: 100%; /* Agora ocupa toda a largura disponível da coluna */
+    max-width: none;
+    margin: auto;
+    min-height: 350px; /* Aumentei a altura mínima para não ficar tão baixo */
+    -webkit-box-shadow: 0px 11px 27px -10px rgba(194,194,194,1);
+    -moz-box-shadow: 0px 11px 27px -10px rgba(194,194,194,1);
+    box-shadow: 0px 11px 27px -10px rgba(194,194,194,1);
+    padding: 5%;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .product-card:hover {
@@ -140,8 +151,8 @@ body {
 
 /* Imagem do produto */
 .product-card img {
-    width: 100%;
-    max-height: 180px;
+    width: 90%;
+    max-height: 300px;
     object-fit: cover;
     border-radius: 8px;
 }
