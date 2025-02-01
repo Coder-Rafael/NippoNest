@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public record HomeDTO(
     UUID id, 
-    String name, 
+    String nome, 
     Double preco, 
     String imagem, 
     HomeUserDTO usuario) {

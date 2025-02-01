@@ -11,7 +11,7 @@ import com.nipponest.DTOs.HomeDTO;
 import com.nipponest.services.HomeService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/home")
 public class HomeController {
     
     @Autowired
