@@ -21,13 +21,16 @@ public class AuthenticationService implements UserDetailsService {
         UserModel userModel = new UserModel();
         userModel.setName(userRegDTO.name());
         userModel.setLogin(userRegDTO.login());
-        userModel.setSenha(userRegDTO.password());
+        userModel.setPassword(userRegDTO.password());
         userModel = repository.save(userModel);
     }
 
-     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return repository.findByLogin(login);
-            //.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDetails user = repository.findByLogin(username);
+        if (user == null) {
+            return null;  
+        }
+        return user;
     }
 }

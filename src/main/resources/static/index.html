@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>NippoNest</title>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <h1>NippoNest</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar mangás, figures...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="nav-link" id="loginBtn">
+                    <i class="fas fa-user"></i>
+                    <span>Entrar</span>
+                </a>
+                <a href="#" class="nav-link" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Carrinho</span>
+                </a>
+            </div>
+        </nav>
+        <div class="categories">
+            <a href="#" class="category-item">Mangás</a>
+            <a href="#" class="category-item">Figures</a>
+            <a href="#" class="category-item">Light Novels</a>
+            <a href="#" class="category-item">Colecionáveis</a>
+            <a href="#" class="category-item">Usados</a>
+        </div>
+    </header>
+    <main>
+        <section class="product-list">
+            <h2>Produtos</h2>
+            <div id="products-container" class="products-grid"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

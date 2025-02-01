@@ -29,13 +29,11 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Remova se continuar dando erro
-                .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                .requestMatchers(HttpMethod.GET, "/home/").permitAll()
                 .requestMatchers(HttpMethod.GET, "/product/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/product/{search}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
