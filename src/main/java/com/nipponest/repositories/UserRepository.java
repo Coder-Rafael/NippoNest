@@ -10,5 +10,6 @@ import com.nipponest.models.UserModel;
 
 public interface UserRepository extends JpaRepository<UserModel, UUID> {
     UserDetails findByLogin(String login);
+    //Optional<UserModel> findByLogin(String login);
     UserModel save(UserModel userModel);
 }

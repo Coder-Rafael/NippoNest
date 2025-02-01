@@ -23,7 +23,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-            .withIssuer("nipponet.com")
+            .withIssuer("nipponest")
             .withSubject(userModel.getLogin())
             .withExpiresAt(getExpirationDate())
             .sign(algorithm);
@@ -34,18 +34,18 @@ public class TokenService {
         }
     }
 
+    // TokenService.java (correto)
     public String validateToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-            .withIssuer("manga_hub")
-            .build()
-            .verify(token)
-            .getSubject();
+                .withIssuer("nipponest")
+                .build()
+                .verify(token)
+                .getSubject();
         } catch (JWTVerificationException exception) {
-           return "";
+            throw new JWTVerificationException("Token inválido: " + exception.getMessage());
         }
-        
     }
 
     private Instant getExpirationDate(){

@@ -1,29 +1,36 @@
 package com.nipponest.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "usuario")
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserModel implements UserDetails {
 
-        @Id
-    @GeneratedValue(generator = "UUID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "UUID", updatable = false, nullable = false)
     private UUID id;
 
@@ -35,7 +42,7 @@ public class UserModel implements UserDetails {
     private String login;
 
     @NotBlank(message = "A senha é obrigatória")
-    private String senha;
+    private String password;
 
     @Column(name = "cep", length = 9)
     private String cep;
@@ -45,18 +52,21 @@ public class UserModel implements UserDetails {
 
     private String imgAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZAiOzNMEBAd0Hush3L38Ih9VSBnEQOlgJPAqFn7E0FysGm0YKjwvMXomlFdjfIzIDGXc&usqp=CAU";
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ProductModel> products = new ArrayList<>();
 
     public UserModel(String name, String login, String senha, String cep, String telefone) {
         this.name = name;
         this.login = login;
-        this.senha = senha;
+        this.password = password;
         this.cep = cep;
         this.phone = telefone;
     }
 
     @Override
     public String getPassword() {
-        return senha;
+        return password;
     }
 
     @Override
