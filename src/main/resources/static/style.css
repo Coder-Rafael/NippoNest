@@ -1,6 +1,7 @@
 :root {
     --primary-color: #FF4B82;
     --secondary-color: #6C63FF;
+    --terceary-color: #f2ff00;
     --background-color: #F5F5F5;
     --text-color: #333333;
     --white: #FFFFFF;
@@ -170,8 +171,13 @@ body {
     font-weight: bold;
     color: var(--primary-color);
 }
+/* Container de ações dos produtos */
+.product-actions {
+    display: flex;
+    gap: 0.5rem;
+}
 
-/* Botão de adicionar ao carrinho */
+/* Estilo do botão com ícone do carrinho */
 .add-to-cart {
     background-color: var(--primary-color);
     color: var(--white);
@@ -179,9 +185,33 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaçamento entre o ícone e o texto */
 }
 
 .add-to-cart:hover {
     background-color: var(--secondary-color);
+}
+
+/* Estilo do botão com ícone do coração */
+.add-to-favorites {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaçamento entre o ícone e o texto */
+}
+
+.add-to-favorites:hover {
+    background-color: var(--terceary-color);
+}
+
+/* Ícones */
+.fas {
+    font-size: 0.8rem; /* Ajuste o tamanho do ícone */
 }

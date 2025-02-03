@@ -5,17 +5,27 @@ async function carregarProdutos() {
 
         const productsContainer = document.getElementById('products-container');
 
-        productsContainer.innerHTML = '';
+        productsContainer.innerHTML = ''; // Limpa o container antes de adicionar novos produtos
 
         produtos.forEach(produto => {
             const productCard = document.createElement('div');
             productCard.classList.add('product-card');
 
+            // Acesse a primeira imagem da lista (produto.imagens[0])
+            const primeiraImagem = produto.imagem[0];
+
             productCard.innerHTML = `
-                <img src="${produto.imagem}" alt="${produto.nome}">
+                <img src="${primeiraImagem}" alt="${produto.nome}">
                 <h3>${produto.nome}</h3>
                 <p class="price">R$ ${produto.preco.toFixed(2)}</p>
-                <button class="add-to-cart">Adicionar ao Carrinho</button>
+                <div class="product-actions">
+                    <button class="add-to-cart">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                    <button class="add-to-favorites">
+                        <i class="fas fa-heart"></i> 
+                    </button>
+                </div>
             `;
 
             productsContainer.appendChild(productCard);
