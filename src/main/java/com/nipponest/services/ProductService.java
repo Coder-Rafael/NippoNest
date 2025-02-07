@@ -28,12 +28,13 @@ public class ProductService {
     private final FileStorageService fileStorageService;
     private final UserRepository userRepository;
 
+    //Cria um produto
     public ProductResponseDTO createProduct(ProductRegDTO productDTO, List<MultipartFile> files, UUID userId) {
         // Busca o usuário
         UserModel user = userRepository.findById(userId)
             .orElseThrow();
 
-        // Cria o produto
+        // Cria o produtoModel
         ProductModel product = new ProductModel();
         product.setNome(productDTO.nome());
         product.setDescricao(productDTO.descricao());
@@ -50,12 +51,73 @@ public class ProductService {
         List<String> imagePaths = fileStorageService.storeProductImages(files, product.getId());
         product.setImagem(imagePaths);
 
-        // Atualiza o produto com as URLs das imagens
         productRepository.save(product);
 
-        // Converte para DTO de resposta
         return convertToResponseDTO(product);
     }
+
+    public ProductModel updateProductImages(UUID productId, List<MultipartFile> files) {
+
+        ProductModel product = productRepository.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+        // Exclui imagens antigas (se necessário)
+        List<String> oldImages = product.getImagem();
+        if (oldImages != null && !oldImages.isEmpty()) {
+            fileStorageService.deleteFiles(oldImages);
+        }
+
+        // Armazena as novas imagens e atualiza o produto
+        List<String> newImagePaths = fileStorageService.storeProductImages(files, productId);
+        product.setImagem(newImagePaths);
+
+        return productRepository.save(product);
+    }
+
+     // Atualizar uma imagem específica
+     public ProductModel updateSpecificImage(UUID productId, int imageIndex, MultipartFile file) {
+        ProductModel product = productRepository.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+        // Valida o índice da imagem
+        if (imageIndex < 0 || imageIndex >= product.getImagem().size()) {
+            throw new IllegalArgumentException("Índice de imagem inválido");
+        }
+
+        String oldImage = product.getImagem().get(imageIndex);
+        fileStorageService.deleteFile(oldImage);
+
+        String newImagePath = fileStorageService.updateProductImage(file, productId);
+
+        product.getImagem().set(imageIndex, newImagePath);
+
+        return productRepository.save(product);
+    }
+
+    // Adicionar novas imagens ao produto
+    public ProductModel addNewImages(UUID productId, List<MultipartFile> files) {
+        ProductModel product = productRepository.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+        // Armazena as novas imagens
+        List<String> newImagePaths = fileStorageService.storeProductImages(files, productId);
+
+        // Adiciona as novas imagens à lista existente
+        product.getImagem().addAll(newImagePaths);
+
+        return productRepository.save(product);
+    }
+
+    public void deleteProduct(UUID productId) {
+        ProductModel product = productRepository.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+        List<String> imagePaths = product.getImagem();
+        if (imagePaths != null && !imagePaths.isEmpty()) {
+            fileStorageService.deleteFiles(imagePaths);
+        }
+        productRepository.delete(product);
+    }
+
 
     private ProductResponseDTO convertToResponseDTO(ProductModel product) {
         return new ProductResponseDTO(
@@ -66,6 +128,20 @@ public class ProductService {
             product.getImagem(),
             new HomeUserDTO(product.getUser().getId(), product.getUser().getName(), product.getUser().getPhone()) 
         );
+    }
+
+    // Valida um único arquivo
+    public void validateImageFile(MultipartFile file) {
+        if (file.isEmpty() || !file.getContentType().startsWith("image/")) {
+            throw new IllegalArgumentException("Arquivo inválido: " + file.getOriginalFilename());
+        }
+    }
+
+    // Valida uma lista de arquivos
+    public void validateImageFiles(List<MultipartFile> files) {
+        for (MultipartFile file : files) {
+            validateImageFile(file);
+        }
     }
 
     private String buildFileUrl(String path, String fileName) {
