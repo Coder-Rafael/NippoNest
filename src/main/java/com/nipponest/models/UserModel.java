@@ -35,13 +35,16 @@ public class UserModel implements UserDetails {
     private UUID id;
 
     @NotBlank(message = "O nome é obrigatório")
+    @Column(name = "nome")
     private String name;
 
     @NotBlank(message = "O email é obrigatório")
     @Email(message = "Email inválido")
+    @Column(name = "email")
     private String login;
 
     @NotBlank(message = "A senha é obrigatória")
+    @Column(name = "senha")
     private String password;
 
     @Column(name = "cep", length = 9)
@@ -63,6 +66,7 @@ public class UserModel implements UserDetails {
         this.cep = cep;
         this.phone = phone;
     }
+
 
     @Override
     public String getPassword() {
