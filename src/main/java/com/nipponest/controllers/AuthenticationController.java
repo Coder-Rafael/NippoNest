@@ -30,7 +30,6 @@ public class AuthenticationController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    // localhost:8080/auth/login
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(loginDTO.login(), loginDTO.password());
@@ -40,12 +39,10 @@ public class AuthenticationController {
         return (ResponseEntity) ResponseEntity.ok(new LoginTokenDTO(token));
     }
 
-    // https://mangahub-production.up.railway.app/auth/register
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UserRegDTO userDTOreg) {
         if (this.service.loadUserByUsername(userDTOreg.login()) != null)
         return ResponseEntity.badRequest().body("Usuário já existe!");
-        //return ResponseEntity.badRequest().build();
 
         String encriptedPassowrd = new BCryptPasswordEncoder().encode(userDTOreg.password());
         UserRegDTO userDto = new UserRegDTO(userDTOreg.name(), userDTOreg.login(), encriptedPassowrd);

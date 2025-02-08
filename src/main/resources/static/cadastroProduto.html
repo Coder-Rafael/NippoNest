@@ -28,7 +28,8 @@
     </form>
 
     <script>
-document.getElementById("product-form").addEventListener("submit", function(event) {
+        
+    document.getElementById("product-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
     const formData = new FormData();
@@ -52,8 +53,7 @@ document.getElementById("product-form").addEventListener("submit", function(even
         formData.append("imagens", imagens[i]);
     }
 
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuaXBwb25lc3QiLCJzdWIiOiIyNTBjNjBjYy02ZTUzLTQxZjQtYjM5Yy1mYzdhZDIzNWFiN2QiLCJleHAiOjE3Mzg1NDM3OTV9.RjYZxTtFX_YTHvEr-8vVeOv_ySq0AxXL6Ii5yZwv1BI"; // Substitua pelo token válido
-
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuaXBwb25lc3QiLCJzdWIiOiIyNTBjNjBjYy02ZTUzLTQxZjQtYjM5Yy1mYzdhZDIzNWFiN2QiLCJleHAiOjE3Mzg5ODU2NDZ9.5XYIyh6UDkNLPMs01ZP2Krk083omowH4rwXsRmLvkuY";
     // Envia a requisição
     fetch("/api/products", {
         method: "POST",

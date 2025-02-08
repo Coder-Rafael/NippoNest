@@ -56,6 +56,17 @@ public class ProductService {
         return convertToResponseDTO(product);
     }
 
+    private ProductResponseDTO convertToResponseDTO(ProductModel product) {
+        return new ProductResponseDTO(
+            product.getId(),
+            product.getNome(),
+            product.getDescricao(),
+            product.getPreco(),
+            product.getImagem(),
+            new HomeUserDTO(product.getUser().getId(), product.getUser().getName(), product.getUser().getPhone()) 
+        );
+    }
+
     public ProductModel updateProductImages(UUID productId, List<MultipartFile> files) {
 
         ProductModel product = productRepository.findById(productId)
@@ -118,17 +129,6 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-
-    private ProductResponseDTO convertToResponseDTO(ProductModel product) {
-        return new ProductResponseDTO(
-            product.getId(),
-            product.getNome(),
-            product.getDescricao(),
-            product.getPreco(),
-            product.getImagem(),
-            new HomeUserDTO(product.getUser().getId(), product.getUser().getName(), product.getUser().getPhone()) 
-        );
-    }
 
     // Valida um único arquivo
     public void validateImageFile(MultipartFile file) {
