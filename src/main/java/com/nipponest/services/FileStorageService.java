@@ -1,9 +1,9 @@
 package com.nipponest.services;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths; 
-import java.nio.file.Files;
+import java.nio.file.Path; // ✅ Import correto para Path
+import java.nio.file.Paths; // ✅ Import correto para Paths
+import java.nio.file.Files; // ✅ Import correto para Files
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,13 +25,11 @@ public class FileStorageService {
         this.productUploadDir = Paths.get(productDir).toAbsolutePath().normalize();
     }
 
-    //METODOS PRA USUARIO
     public String storeUserAvatar(MultipartFile file, UUID userId) {
         String fileName = "user-" + userId + getFileExtension(file);
         return storeFile(file, userUploadDir, fileName);
     }   
 
-    //METODOS PRA PRODUTOS
     public List<String> storeProductImages(List<MultipartFile> files, UUID productId) {
         List<String> fileNames = new ArrayList<>();
         int index = 1;
@@ -43,13 +41,6 @@ public class FileStorageService {
         }
         return fileNames;
     }
-
-    public String updateProductImage(MultipartFile file, UUID productId) {
-        String fileName = "product-" + productId + "-" + UUID.randomUUID() + getFileExtension(file);
-        return storeFile(file, productUploadDir, fileName);
-    }
-
-    //METODOS DO SERVICE
     private String storeFile(MultipartFile file, Path targetDir, String fileName) {
         try {
             Path targetPath = targetDir.resolve(fileName);
@@ -57,22 +48,6 @@ public class FileStorageService {
             return fileName;
         } catch (IOException ex) {
         throw new RuntimeException("Falha ao salvar arquivo", ex);
-        }
-    }
-
-    // Excluir uma única imagem
-    public void deleteFile(String fileName) {
-        try {
-            Path filePath = productUploadDir.resolve(fileName);
-            Files.deleteIfExists(filePath);
-        } catch (IOException ex) {
-            throw new RuntimeException("Falha ao excluir arquivo: " + fileName, ex);
-        }
-    }
-
-    public void deleteFiles(List<String> filePaths) {
-        for (String filePath : filePaths) {
-            deleteFile(filePath);
         }
     }
 
