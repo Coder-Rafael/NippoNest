@@ -37,7 +37,6 @@ public class ProductController {
 
     @Autowired
     private final ProductService productService; 
-    @Autowired
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(
