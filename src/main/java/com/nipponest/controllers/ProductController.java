@@ -59,6 +59,7 @@ public class ProductController {
             return ResponseEntity.ok(updatedProduct);
     }
 
+    // Atualizar uma imagem específica
     @PatchMapping("/{productId}/images/{imageIndex}")
     public ResponseEntity<ProductModel> updateSpecificProductImage(
         @PathVariable UUID productId,
@@ -73,7 +74,7 @@ public class ProductController {
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId) {
-    productService.deleteProduct(productId);
-    return ResponseEntity.noContent().build();
-}
+      productService.deleteProduct(productId);
+      return ResponseEntity.noContent().build();
+    }
 }
