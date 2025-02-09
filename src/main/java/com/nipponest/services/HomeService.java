@@ -38,6 +38,7 @@ public class HomeService {
         listResponse.add(new HomeDTO(
             productModel.getId(), 
             productModel.getNome(), 
+            productModel.getDescricao(), 
             productModel.getPreco(), 
             imageUrls, // Agora é uma lista de URLs
             userDTO
