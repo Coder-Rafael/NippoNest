@@ -77,7 +77,6 @@ public class UserModel implements UserDetails {
     public String getUsername() {
         return login;
     }
-
     // IGNORAR DAQUI PRA BAIXO POR HORA, OBRIGADO A IMPLEMENTAR
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

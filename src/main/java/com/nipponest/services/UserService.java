@@ -38,4 +38,11 @@ public class UserService {
         .path(fileName)
         .toUriString();
     }
+
+    public void deleteUserById(UUID userId) {
+        UserModel user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        userRepository.delete(user);
+    }
 }

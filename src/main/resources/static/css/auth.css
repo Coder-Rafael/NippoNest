@@ -1,0 +1,74 @@
+:root {
+    --color-red-light: #FF6B6B;
+    --color-red-dark: #C0392B;
+}
+
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.form-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    margin: 2rem auto;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-floating {
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--color-red-light);
+    border-color: var(--color-red-light);
+    width: 100%;
+    padding: 0.75rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-red-dark);
+    border-color: var(--color-red-dark);
+}
+
+.form-text {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.form-text a {
+    color: var(--color-red-light);
+    text-decoration: none;
+}
+
+.form-text a:hover {
+    color: var(--color-red-dark);
+    text-decoration: underline;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-red-light);
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.back-link:hover {
+    color: var(--color-red-dark);
+}
+
+.form-switch {
+    text-align: right;
+    margin-bottom: 1rem;
+}
