@@ -559,3 +559,144 @@
 #logoutIcon {
     display: none; /* Esconde o botão inicialmente */
 }
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: auto; /* Permite rolagem caso o conteúdo seja grande */
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: auto; /* Centraliza horizontalmente */
+    top: 10%; /* Empurra o modal para baixo, evitando o header */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+    overflow: hidden; /* Evita conteúdo transbordando */
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close:hover {
+    color: #333;
+}
+
+#addProductForm {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+#addProductForm div {
+    display: grid;
+    gap: 0.5rem;
+}
+
+#addProductForm label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+#addProductForm input,
+#addProductForm textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#addProductForm input:focus,
+#addProductForm textarea:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+}
+
+#addProductForm textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#addProductForm button[type="submit"] {
+    background-color: #646cff;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#addProductForm button[type="submit"]:hover {
+    background-color: #535bf2;
+    transform: translateY(-1px);
+}
+
+#addProductForm button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: auto;
+        top: 5%; /* Mais espaço para telas pequenas */
+        padding: 1.5rem;
+    }
+    
+    #addProductForm {
+        gap: 1rem;
+    }
+    
+    #addProductForm input,
+    #addProductForm textarea {
+        padding: 0.7rem;
+    }
+}
+

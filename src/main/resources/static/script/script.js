@@ -235,22 +235,25 @@ async function carregarProdutosRecomendados(productId) {
     }
 }
 
-// Atualiza o ícone do login com base no estado do usuário
+/// Atualiza os ícones com base no estado do usuário
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("authToken");
     const userPhoto = localStorage.getItem("userPhoto");
     const loginIcon = document.getElementById("loginIcon");
     const logoutIcon = document.getElementById("logoutIcon");
+    const addProductIcon = document.getElementById("addProductButton");
 
     if (loginIcon) {
         if (token && userPhoto) {
-            // Usuário logado: Exibe a foto do usuário
+            // Usuário logado: Exibe a foto do usuário e ícone "Adicionar Produto"
             loginIcon.innerHTML = `<img src="${userPhoto}" alt="User" class="user-photo">`;
             logoutIcon.style.display = "inline"; // Exibe o botão de logout
+            if (addProductIcon) addProductIcon.style.display = "inline"; // Exibe o botão "Adicionar Produto"
         } else {
-            // Usuário não logado: Exibe o ícone padrão
+            // Usuário não logado: Exibe o ícone padrão e oculta o "Adicionar Produto"
             loginIcon.innerHTML = `<i class="bi bi-person"></i>`;
             logoutIcon.style.display = "none"; // Oculta o botão de logout
+            if (addProductIcon) addProductIcon.style.display = "none"; // Oculta o botão "Adicionar Produto"
         }
     }
 });
@@ -266,6 +269,7 @@ document.getElementById("logoutIcon").addEventListener("click", (e) => {
     // Atualiza os ícones para o estado inicial
     const loginIcon = document.getElementById("loginIcon");
     const logoutIcon = document.getElementById("logoutIcon");
+    const addProductIcon = document.getElementById("addProductButton");
 
     if (loginIcon) {
         loginIcon.innerHTML = `<i class="bi bi-person"></i>`;
@@ -273,10 +277,94 @@ document.getElementById("logoutIcon").addEventListener("click", (e) => {
     if (logoutIcon) {
         logoutIcon.style.display = "none"; // Oculta o botão de logout
     }
+    if (addProductIcon) {
+        addProductIcon.style.display = "none"; // Oculta o botão "Adicionar Produto"
+    }
 
     // Redireciona para a página inicial ou de login
     window.location.href = "http://localhost:8080";
 });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const addProductButton = document.getElementById("addProductButton");
+        const addProductModal = document.getElementById("addProductModal");
+        const closeModal = document.getElementById("closeModal");
+        const addProductForm = document.getElementById("addProductForm");
+
+        // Verifica se os elementos existem
+        if (!addProductButton || !addProductModal || !closeModal || !addProductForm) {
+            console.error("Erro: Elementos do DOM não encontrados. Verifique os IDs.");
+            return;
+        }
+
+        // Abre o modal
+        addProductButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            addProductModal.style.display = "flex";
+        });
+
+        // Fecha o modal
+        closeModal.addEventListener("click", () => {
+            addProductModal.style.display = "none";
+        });
+
+        // Envia os dados do formulário ao backend
+        addProductForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            // Cria um objeto FormData
+            const formData = new FormData();
+
+            // Dados do produto
+            const productData = {
+                nome: document.getElementById("nome").value,
+                descricao: document.getElementById("descricao").value,
+                preco: parseFloat(document.getElementById("preco").value),
+                estoque: parseInt(document.getElementById("estoque").value),
+                genero: document.getElementById("genero").value,
+                tipoProduto: document.getElementById("tipoProduto").value
+            };
+
+            // Adiciona o objeto product como JSON dentro de um Blob
+            formData.append("product", new Blob([JSON.stringify(productData)], { type: "application/json" }));
+
+            // Adiciona as imagens
+            const imagens = document.getElementById("imagens").files;
+            for (let i = 0; i < imagens.length; i++) {
+                formData.append("imagens", imagens[i]);
+            }
+
+            try {
+                const token = localStorage.getItem("authToken"); // Ou onde você está armazenando o token
+                if (!token) {
+                    alert("Usuário não autenticado. Faça login novamente.");
+                    return;
+                }
+
+                // Envia a requisição
+                const response = await fetch("http://localhost:8080/api/products", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}` // Inclui o Bearer Token
+                    },
+                    body: formData // Envia os dados do FormData
+                });
+
+                if (response.ok) {
+                    alert("Produto adicionado com sucesso!");
+                    addProductModal.style.display = "none";
+                    addProductForm.reset();
+                } else {
+                    const error = await response.json();
+                    alert(`Erro: ${error.message}`);
+                }
+            } catch (error) {
+                console.error("Erro ao adicionar produto:", error);
+                alert("Não foi possível adicionar o produto. Tente novamente mais tarde.");
+            }
+        });
+    });
+
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     carregarProdutos();

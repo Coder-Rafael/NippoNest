@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="sticky-top">
+    <header>
         <nav class="navbar navbar-expand-lg bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="#">
@@ -43,7 +43,10 @@
                     </a>
                     <a href="#" class="nav-icon" id="logoutIcon">
                         <i class="bi bi-box-arrow-in-right"></i>
-                    </a>                    
+                    </a>    
+                    <a href="#" class="nav-icon" id="addProductButton">
+                        <i class="bi bi-plus-circle"></i>
+                    </a>                
                 </div>
             </div>
         </nav>
@@ -200,6 +203,41 @@
         </section>
     </main>
 
+    <div id="addProductModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Adicionar Produto</h2>
+            <form id="addProductForm">
+                <div>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div>
+                    <label for="descricao">Descrição:</label>
+                    <textarea id="descricao" name="descricao" required></textarea>
+                </div>
+                <div>
+                    <label for="preco">Preço:</label>
+                    <input type="number" id="preco" name="preco" step="0.01" required>
+                </div>
+                <div>
+                    <label for="estoque">Estoque:</label>
+                    <input type="number" id="estoque" name="estoque" required>
+                </div>
+                <div>
+                    <label for="genero">Gênero:</label>
+                    <input type="text" id="genero" name="genero" required>
+                </div>
+                <div>
+                    <label for="tipoProduto">Tipo do Produto:</label>
+                    <input type="text" id="tipoProduto" name="tipoProduto" required>
+                </div>
+                <input type="file" id="imagens" name="imagens" multiple>
+                <button type="submit">Salvar Produto</button>
+            </form>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">

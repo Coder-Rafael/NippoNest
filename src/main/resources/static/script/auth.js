@@ -39,7 +39,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
             // Salva os dados no localStorage
             localStorage.setItem("authToken", token);
             localStorage.setItem("userPhoto", userPhoto);
-
             // Redireciona para a página principal
             window.location.href = "http://localhost:8080";
         } else {
