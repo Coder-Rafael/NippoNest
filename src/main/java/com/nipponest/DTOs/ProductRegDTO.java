@@ -2,6 +2,9 @@ package com.nipponest.DTOs;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nipponest.ENUMs.Genero;
+import com.nipponest.ENUMs.TipoProduto;
+
 import java.util.List;
 
 public record ProductRegDTO(
@@ -9,7 +12,7 @@ public record ProductRegDTO(
     String descricao, 
     Double preco,
     int estoque,
-    String genero,
-    String tipoProduto
+    List<Genero> genero,
+    TipoProduto tipoProduto
 ) {}
 

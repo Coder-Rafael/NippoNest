@@ -315,14 +315,17 @@ document.getElementById("logoutIcon").addEventListener("click", (e) => {
             // Cria um objeto FormData
             const formData = new FormData();
 
+            let generosSelecionados = Array.from(document.querySelectorAll("input[name='genero']:checked")).map(e => e.value);
+
+            let tipoProdutoSelecionado = document.querySelector("input[name='tipoProduto']:checked")?.value;
             // Dados do produto
             const productData = {
                 nome: document.getElementById("nome").value,
                 descricao: document.getElementById("descricao").value,
                 preco: parseFloat(document.getElementById("preco").value),
                 estoque: parseInt(document.getElementById("estoque").value),
-                genero: document.getElementById("genero").value,
-                tipoProduto: document.getElementById("tipoProduto").value
+                genero: generosSelecionados,
+                tipoProduto: tipoProdutoSelecionado
             };
 
             // Adiciona o objeto product como JSON dentro de um Blob

@@ -225,13 +225,20 @@
                     <input type="number" id="estoque" name="estoque" required>
                 </div>
                 <div>
-                    <label for="genero">Gênero:</label>
-                    <input type="text" id="genero" name="genero" required>
+                    <label for="genero">Gêneros:</label><br>
+                    <input type="checkbox" id="generoShounen" name="genero" value="SHOUNEN"> Shounen
+                    <input type="checkbox" id="generoFantasia" name="genero" value="FANTASIA"> Fantasia
+                    <input type="checkbox" id="generoRomance" name="genero" value="ROMANCE"> Romance
+                    <input type="checkbox" id="generoMistico" name="genero" value="MISTICO"> Místico
                 </div>
+                
                 <div>
-                    <label for="tipoProduto">Tipo do Produto:</label>
-                    <input type="text" id="tipoProduto" name="tipoProduto" required>
+                    <label for="tipoProduto">Tipo do Produto:</label><br>
+                    <input type="radio" id="tipoProdutoManga" name="tipoProduto" value="MANGA"> Manga
+                    <input type="radio" id="tipoProdutoLightNovel" name="tipoProduto" value="LIGHT_NOVEL"> Light Novel
+                    <input type="radio" id="tipoProdutoNovel" name="tipoProduto" value="NOVEL"> Novel
                 </div>
+                    
                 <input type="file" id="imagens" name="imagens" multiple>
                 <button type="submit">Salvar Produto</button>
             </form>
