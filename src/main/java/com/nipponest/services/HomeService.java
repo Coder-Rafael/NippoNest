@@ -28,9 +28,8 @@ public class HomeService {
     for (ProductModel productModel : lastProducts) {
         UserModel user = productModel.getUser();
 
-        // Gerando URLs das imagens armazenadas no diretório do servidor
         List<String> imageUrls = productModel.getImagem().stream()
-            .map(imageName -> "http://localhost:8080/uploads/products/" + imageName) // Ajuste com o seu caminho correto
+            .map(imageName -> "http://localhost:8080/uploads/products/" + imageName) 
             .collect(Collectors.toList());
 
         HomeUserDTO userDTO = new HomeUserDTO(user.getId(), user.getName(), user.getPhone());
@@ -40,7 +39,7 @@ public class HomeService {
             productModel.getNome(), 
             productModel.getDescricao(), 
             productModel.getPreco(), 
-            imageUrls, // Agora é uma lista de URLs
+            imageUrls,
             userDTO
         ));
     }
