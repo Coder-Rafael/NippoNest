@@ -2,13 +2,19 @@ package com.nipponest.services;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.nipponest.DTOs.HomeDTO;
 import com.nipponest.DTOs.HomeUserDTO;
 import com.nipponest.DTOs.ProductRegDTO;
 import com.nipponest.DTOs.ProductResponseDTO;
@@ -66,6 +72,31 @@ public class ProductService {
             new HomeUserDTO(product.getUser().getId(), product.getUser().getName(), product.getUser().getPhone()) 
         );
     }
+
+    public Page<HomeDTO> searchProductsPageable(String nome, Pageable pageable) {
+  
+        Page<ProductModel> result = productRepository.findAllByNome(nome, pageable);
+    
+        // Mapeia os resultados para HomeDTO
+        List<HomeDTO> listProductsDTOs = result.getContent().stream()
+                .map(produto -> new HomeDTO(
+                    produto.getId(), 
+                    produto.getNome(), 
+                    produto.getDescricao(),
+                    produto.getPreco(),
+                    produto.getImagem(),
+                    new HomeUserDTO(
+                        produto.getUser().getId(),
+                        produto.getUser().getName(),
+                        produto.getUser().getPhone()
+                    )
+                ))
+                .collect(Collectors.toList());
+    
+        // Retorna um Page<HomeDTO> com os resultados mapeados
+        return new PageImpl<>(listProductsDTOs, pageable, result.getTotalElements());
+    }
+    
 
     public ProductModel updateProductImages(UUID productId, List<MultipartFile> files) {
 

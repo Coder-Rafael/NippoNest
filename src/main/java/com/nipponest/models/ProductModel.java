@@ -7,10 +7,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nipponest.DTOs.HomeUserDTO;
 import com.nipponest.DTOs.ProductRegDTO;
 import com.nipponest.DTOs.ProductResponseDTO;
+import com.nipponest.ENUMs.Genero;
+import com.nipponest.ENUMs.TipoProduto;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -34,9 +39,16 @@ public class ProductModel {
     private String descricao;
     private Double preco;
     private int estoque;
-    private String genero;
-    //Atualizar para um ENUM com os tipos pre definidos, tipo Manga, Novel e etc :v
-    private String tipo_produto;
+
+    @ElementCollection
+    @CollectionTable(name = "product_generos", joinColumns = @JoinColumn(name = "product_id"))
+    @Enumerated(EnumType.STRING)  
+    @Column(name = "genero")
+    private List<Genero> genero;
+
+    @Enumerated(EnumType.STRING)
+    private TipoProduto tipo_produto;
+
     @ElementCollection
     private List<String> imagem;
 
@@ -45,14 +57,13 @@ public class ProductModel {
     @JsonBackReference 
     private UserModel user;
 
-    //Construtor para ProductRegDTO
     public ProductModel(ProductRegDTO produtoDTO) {
         this.nome = produtoDTO.nome();
         this.descricao = produtoDTO.descricao();
         this.preco = produtoDTO.preco();
         this.estoque = produtoDTO.estoque();
-        this.genero = produtoDTO.genero();
-        this.tipo_produto = produtoDTO.tipoProduto();
+        this.genero = produtoDTO.genero();  // Agora uma lista de Genero (enum)
+        this.tipo_produto = produtoDTO.tipoProduto();  // Agora um enum
     }
 
     public ProductModel(ProductRegDTO produtoDTO, UserModel user) {

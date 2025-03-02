@@ -35,7 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         if (response.ok) {
             const data = await response.json();
             const token = data.token;
-            const userPhoto = data.photo || "http://localhost:8080/uploads/products/product-a4f99d41-20d2-457a-98ad-c683d15a1eae-1.jpeg";
+            const userPhoto = data.photo || "http://localhost:8080/uploads/products/product-67fbcde6-3b40-468a-ab22-ec31fe61737c-1.jpeg";
             // Salva os dados no localStorage
             localStorage.setItem("authToken", token);
             localStorage.setItem("userPhoto", userPhoto);
@@ -88,7 +88,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
 // Lógica para manter o login após refresh
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("authToken");
-    const userPhoto = localStorage.getItem("userPhoto"); // Caso você decida armazenar a foto localmente
+    const userPhoto = localStorage.getItem("userPhoto"); 
 
     if (token && userPhoto) {
         const loginIcon = document.getElementById("loginIcon");
