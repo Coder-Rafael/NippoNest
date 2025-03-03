@@ -29,8 +29,8 @@ public class HomeService {
         UserModel user = productModel.getUser();
 
         List<String> imageUrls = productModel.getImagem().stream()
-            .map(imageName -> "https://nipponest-production.up.railway.app//uploads/products/" + imageName) 
-            .collect(Collectors.toList());
+        .map(imageName -> "https://nipponest-production.up.railway.app" + "/uploads/products/" + imageName)
+        .collect(Collectors.toList());
 
         HomeUserDTO userDTO = new HomeUserDTO(user.getId(), user.getName(), user.getPhone());
 
