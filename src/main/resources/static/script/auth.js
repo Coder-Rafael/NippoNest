@@ -24,7 +24,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("http://localhost:8080/auth/login", {
+        const response = await fetch("https://nipponest-production.up.railway.app/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,12 +35,12 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         if (response.ok) {
             const data = await response.json();
             const token = data.token;
-            const userPhoto = data.photo || "http://localhost:8080/uploads/products/product-67fbcde6-3b40-468a-ab22-ec31fe61737c-1.jpeg";
+            const userPhoto = data.photo || "https://nipponest-production.up.railway.app/uploads/products/product-67fbcde6-3b40-468a-ab22-ec31fe61737c-1.jpeg";
             // Salva os dados no localStorage
             localStorage.setItem("authToken", token);
             localStorage.setItem("userPhoto", userPhoto);
             // Redireciona para a página principal
-            window.location.href = "http://localhost:8080";
+            window.location.href = "https://nipponest-production.up.railway.app/";
         } else {
             alert("Erro no login: Verifique suas credenciais");
         }
@@ -65,7 +65,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     }
 
     try {
-        const response = await fetch("http://localhost:8080/auth/register", {
+        const response = await fetch("https://nipponest-production.up.railway.app/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

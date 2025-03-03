@@ -3,7 +3,7 @@ const produtosCache = {};
 
 async function carregarProdutos() {
     try {
-        const response = await fetch('http://localhost:8080/home');
+        const response = await fetch('https://nipponest-production.up.railway.app/home');
         if (!response.ok) throw new Error('Erro ao buscar produtos');
         const produtos = await response.json();
 
@@ -146,7 +146,7 @@ function criarModal() {
     let produto = produtosCache[productId];
     if (!produto) {
         try {
-            const response = await fetch(`http://localhost:8080/home`);
+            const response = await fetch(`https://nipponest-production.up.railway.app/home`);
             produto = await response.json();
             produtosCache[productId] = produto; // Atualiza cache
         } catch (error) {
@@ -187,7 +187,7 @@ async function carregarProdutosRecomendados(productId) {
     recommendedContainer.innerHTML = ''; // Limpa conteúdo anterior
 
     try {
-        const response = await fetch(`http://localhost:8080/home`);
+        const response = await fetch(`https://nipponest-production.up.railway.app/home`);
         const produtosRecomendados = await response.json();
 
         if (produtosRecomendados && produtosRecomendados.length) {
@@ -282,7 +282,7 @@ document.getElementById("logoutIcon").addEventListener("click", (e) => {
     }
 
     // Redireciona para a página inicial ou de login
-    window.location.href = "http://localhost:8080";
+    window.location.href = "https://nipponest-production.up.railway.app/";
 });
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -345,7 +345,7 @@ document.getElementById("logoutIcon").addEventListener("click", (e) => {
                 }
 
                 // Envia a requisição
-                const response = await fetch("http://localhost:8080/api/products", {
+                const response = await fetch("https://nipponest-production.up.railway.app/api/products", {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${token}` // Inclui o Bearer Token
