@@ -308,7 +308,7 @@ document.getElementById("logoutIcon").addEventListener("click", (e) => {
             addProductModal.style.display = "none";
         });
 
-        // Envia os dados do formulário ao backend
+        // CRIA PRODUTO
         addProductForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 

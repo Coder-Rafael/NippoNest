@@ -18,6 +18,9 @@ public class FileStorageService {
     private final Path userUploadDir;
     private final Path productUploadDir;
 
+    @Value("${app.base-url}")
+    private String baseUrl;
+
     public FileStorageService(
         @Value("${file.upload-dir-users}") String userDir,
         @Value("${file.upload-dir-products}") String productDir) {
@@ -28,17 +31,18 @@ public class FileStorageService {
     //METODOS PRA USUARIO
     public String storeUserAvatar(MultipartFile file, UUID userId) {
         String fileName = "user-" + userId + getFileExtension(file);
-        return storeFile(file, userUploadDir, fileName);
-    }   
+        String savedFileName = storeFile(file, userUploadDir, fileName);
+        return generateFileUrl("users", savedFileName); // Gera a URL completa
+    } 
 
-    //METODOS PRA PRODUTOS
+    // Métodos para produtos
     public List<String> storeProductImages(List<MultipartFile> files, UUID productId) {
         List<String> fileNames = new ArrayList<>();
         int index = 1;
         for (MultipartFile file : files) {
             String fileName = "product-" + productId + "-" + index + getFileExtension(file);
-            storeFile(file, productUploadDir, fileName);
-            fileNames.add(fileName);
+            String savedFileName = storeFile(file, productUploadDir, fileName);
+            fileNames.add(generateFileUrl("products", savedFileName)); // Gera a URL completa
             index++;
         }
         return fileNames;
@@ -46,7 +50,8 @@ public class FileStorageService {
 
     public String updateProductImage(MultipartFile file, UUID productId) {
         String fileName = "product-" + productId + "-" + UUID.randomUUID() + getFileExtension(file);
-        return storeFile(file, productUploadDir, fileName);
+        String savedFileName = storeFile(file, productUploadDir, fileName);
+        return generateFileUrl("products", savedFileName); // Gera a URL completa
     }
 
     //METODOS DO SERVICE
@@ -56,7 +61,7 @@ public class FileStorageService {
             file.transferTo(targetPath);
             return fileName;
         } catch (IOException ex) {
-        throw new RuntimeException("Falha ao salvar arquivo", ex);
+            throw new RuntimeException("Falha ao salvar arquivo", ex);
         }
     }
 
@@ -76,9 +81,16 @@ public class FileStorageService {
         }
     }
 
+    // Gera a URL completa do arquivo
+    private String generateFileUrl(String type, String fileName) {
+        return baseUrl + "/uploads/" + type + "/" + fileName;
+    }
+
     private String getFileExtension(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
-        return originalFileName != null ?
-        originalFileName.substring(originalFileName.lastIndexOf(".")) : "";
+        if (originalFileName != null && originalFileName.contains(".")) {
+            return originalFileName.substring(originalFileName.lastIndexOf("."));
+        }
+        return "";
     }
 }
