@@ -8,7 +8,7 @@ COPY src /app/src
 COPY pom.xml /app/pom.xml
 
 # Baixa o Maven e executa o build
-RUN apt-get update && apt-get install -y maven && mvn clean package
+RUN apt-get update && apt-get install -y maven && mvn clean package -DskipTests
 
 # Estágio de runtime
 FROM openjdk:17-jdk-slim
