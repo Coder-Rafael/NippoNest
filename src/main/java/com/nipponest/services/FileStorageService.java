@@ -26,6 +26,7 @@ public class FileStorageService {
         @Value("${file.upload-dir-products}") String productDir) {
         this.userUploadDir = Paths.get(userDir).toAbsolutePath().normalize();
         this.productUploadDir = Paths.get(productDir).toAbsolutePath().normalize();
+        System.out.println("Base URL: " + this.baseUrl);
     }
 
     //METODOS PRA USUARIO
@@ -59,6 +60,8 @@ public class FileStorageService {
         try {
             // Garante que o fileName seja apenas o nome do arquivo
             String simpleFileName = Paths.get(fileName).getFileName().toString();
+            System.out.println("Nome do arquivo:"+fileName);
+            System.out.println("Nome simples do arquivo:"+simpleFileName);
 
             Path targetPath = targetDir.resolve(simpleFileName);
             file.transferTo(targetPath);
