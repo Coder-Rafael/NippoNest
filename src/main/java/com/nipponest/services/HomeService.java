@@ -27,9 +27,15 @@ public class HomeService {
 
     for (ProductModel productModel : lastProducts) {
         UserModel user = productModel.getUser();
-
         List<String> imageUrls = productModel.getImagem().stream()
-        .map(imageName -> "https://nipponest-production.up.railway.app" + "/uploads/products/" + imageName)
+        .map(imageName -> {
+            // Verifica se o imageName já contém a URL completa (caso não precise do domínio novamente)
+            if (imageName.startsWith("http")) {
+                return imageName; // Retorna a URL completa já salva no banco
+            } else {
+                return "https://nipponest-production.up.railway.app/uploads/products/" + imageName; // Concatena o caminho correto
+            }
+        })
         .collect(Collectors.toList());
 
         HomeUserDTO userDTO = new HomeUserDTO(user.getId(), user.getName(), user.getPhone());
