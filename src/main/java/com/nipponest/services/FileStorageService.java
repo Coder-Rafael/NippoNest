@@ -33,7 +33,7 @@ public class FileStorageService {
         String fileName = "user-" + userId + getFileExtension(file);
         String savedFileName = storeFile(file, userUploadDir, fileName);
         return generateFileUrl("users", savedFileName); // Gera a URL completa
-    } 
+    }
 
     // Métodos para produtos
     public List<String> storeProductImages(List<MultipartFile> files, UUID productId) {
@@ -57,9 +57,12 @@ public class FileStorageService {
     //METODOS DO SERVICE
     private String storeFile(MultipartFile file, Path targetDir, String fileName) {
         try {
-            Path targetPath = targetDir.resolve(fileName);
+            // Garante que o fileName seja apenas o nome do arquivo
+            String simpleFileName = Paths.get(fileName).getFileName().toString();
+
+            Path targetPath = targetDir.resolve(simpleFileName);
             file.transferTo(targetPath);
-            return fileName;
+            return simpleFileName; // Retorna apenas o nome do arquivo
         } catch (IOException ex) {
             throw new RuntimeException("Falha ao salvar arquivo", ex);
         }
