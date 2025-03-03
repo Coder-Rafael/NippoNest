@@ -1,33 +1,29 @@
-# Usa a imagem do Maven com OpenJDK 17
-FROM maven:3.8.6-jdk-17 AS build
+# Estágio de build
+FROM openjdk:17-jdk-slim AS build
 
-# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia o código-fonte para o container
+# Copia o código-fonte e o arquivo de configuração do Maven
 COPY src /app/src
 COPY pom.xml /app/pom.xml
 
-# Executa o build do projeto
-RUN mvn clean package
+# Baixa o Maven e executa o build
+RUN apt-get update && apt-get install -y maven && mvn clean package
 
-# Usa a imagem do OpenJDK para rodar a aplicação
+# Estágio de runtime
 FROM openjdk:17-jdk-slim
 
-# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia o JAR gerado na etapa anterior
+# Copia o JAR gerado
 COPY --from=build /app/target/nipponest-0.0.1-SNAPSHOT.jar app.jar
 
 # Cria as pastas de uploads
 RUN mkdir -p /app/uploads/users /app/uploads/products
 
-# Copia a pasta uploads para dentro do container
+# Copia a pasta uploads
 COPY uploads /app/uploads
 
-# Expõe a porta da aplicação
 EXPOSE 8080
 
-# Define o comando de execução da aplicação
 CMD ["java", "-jar", "app.jar"]
