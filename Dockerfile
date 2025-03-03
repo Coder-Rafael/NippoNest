@@ -1,5 +1,5 @@
-# Usa a imagem do OpenJDK com Maven ou Gradle pré-instalado
-FROM maven:3.8.6-openjdk-17 AS build
+# Usa a imagem do Maven com OpenJDK 17
+FROM maven:3.8.6-jdk-17 AS build
 
 # Define o diretório de trabalho
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY pom.xml /app/pom.xml
 RUN mvn clean package
 
 # Usa a imagem do OpenJDK para rodar a aplicação
-FROM openjdk:17
+FROM openjdk:17-jdk-slim
 
 # Define o diretório de trabalho
 WORKDIR /app
